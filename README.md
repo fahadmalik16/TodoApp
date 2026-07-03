@@ -23,7 +23,7 @@ A basic full-stack To-Do application, built from scratch as a learning project.
 
 ## Project Status
 
-🚧 Work in progress — set up incrementally as a learning exercise. See `Info.md` for requirements and dependency notes.
+🚧 Work in progress — set up incrementally.
 
 ## Getting Started
 

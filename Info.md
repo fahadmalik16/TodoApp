@@ -24,12 +24,11 @@ fast api,
 uvicorn
 sqlalchemy (ORM) ,
 alembic for migrations, 
-async pg for psql driver,
+psycopg (v3) as the psql driver (handles both async app + sync alembic),
 pydantic and pydantic settings for data validation, 
 passlib with bcrypt for pass hashing, 
 pyjwt for jwt,
-pytest and pytest-asyncio, httpx async for testing,
-psycopg2 for almebic driver. 
+pytest and pytest-asyncio, httpx async for testing. 
 
 Arch:
 app/
