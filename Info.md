@@ -30,3 +30,13 @@ passlib with bcrypt for pass hashing,
 pyjwt for jwt,
 pytest and pytest-asyncio, httpx async for testing,
 psycopg2 for almebic driver. 
+
+Arch:
+app/
+  api/            → Presentation: routers
+  schemas/        → Presentation: request/response validation (Pydantic)
+  services/       → Business: rules & orchestration
+  repositories/   → Data: DB access
+  models/         → Data: SQLAlchemy table definitions
+  core/           → cross-cutting: config, security/JWT helpers (not a tier, just shared infra)
+  db/             → DB engine/session setup
