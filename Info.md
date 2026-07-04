@@ -36,6 +36,6 @@ app/
   schemas/        → Presentation: request/response validation (Pydantic)
   services/       → Business: rules & orchestration
   repositories/   → Data: DB access
-  models/         → Data: SQLAlchemy table definitions
+  models/         → Data: SQLAlchemy table definitions - they are defining the schemas
   core/           → cross-cutting: config, security/JWT helpers (not a tier, just shared infra)
   db/             → DB engine/session setup
