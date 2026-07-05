@@ -40,3 +40,17 @@ app/
   models/         → Data: SQLAlchemy table definitions - they are defining the schemas
   core/           → cross-cutting: config, security/JWT helpers (not a tier, just shared infra)
   db/             → DB engine/session setup
+
+
+Frontend:
+Stack decisions:
+- Next.js (App Router) — file-based routing, e.g. app/signin/page.tsx -> /signin
+- TypeScript — typed JS for safer code
+- Tailwind CSS — utility-class styling (industry standard with Next.js)
+- Talks to backend over HTTP; JWT stored in browser (localStorage), sent as
+  Authorization: Bearer <token>. Client-side signout (clears token).
+- Backend needs CORS enabled to allow the frontend origin (localhost:3000).
+
+Scope: signup page, signin page, todos page (list/create/toggle/edit/delete), signout.
+
+Structure: (to be added later once scaffolded)
