@@ -5,8 +5,8 @@ description = "This is a Todo App"
 requires-python = ">=3.12"
 dependencies = [
     "alembic>=1.18.5",
+    "bcrypt>=5.0.0",
     "fastapi>=0.139.0",
-    "passlib[bcrypt]>=1.7.4",
     "psycopg[binary]>=3.3.4",
     "pydantic-settings>=2.14.2",
     "pyjwt>=2.13.0",
