@@ -16,3 +16,7 @@ class InvalidCredentialsError(AppError):
 
 class InactiveUserError(AppError):
     """Raised when an authenticated user's account is disabled."""
+
+
+class TodoNotFoundError(AppError):
+    """Raised when a todo does not exist or does not belong to the user."""
