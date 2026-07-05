@@ -33,7 +33,7 @@ pytest and pytest-asyncio, httpx async for testing.
 
 Arch:
 app/
-  api/            → Presentation: routers
+  api/            → Presentation: routes
   schemas/        → Presentation: request/response validation (Pydantic)
   services/       → Business: rules & orchestration
   repositories/   → Data: DB access
