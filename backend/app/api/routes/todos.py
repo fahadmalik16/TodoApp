@@ -48,13 +48,14 @@ async def update_todo(
         )
 
 
-@router.delete("/{todo_id}", status_code=status.HTTP_204_NO_CONTENT)
+@router.delete("/{todo_id}")
 async def delete_todo(
     todo_id: int, current_user: CurrentUser, service: TodoServiceDep
-) -> None:
+) -> dict[str, str]:
     try:
         await service.delete_todo(todo_id, current_user.id)
     except TodoNotFoundError:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="Todo not found"
         )
+    return {"detail": "Todo deleted successfully"}
