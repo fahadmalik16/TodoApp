@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException, status
 
-from app.api.deps import AuthServiceDep
+from app.api.deps import AuthServiceDep, CurrentUser
 from app.core.exceptions import (
     EmailAlreadyExistsError,
     InactiveUserError,
@@ -43,3 +43,8 @@ async def signin(data: UserLogin, service: AuthServiceDep) -> Token:
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Account is disabled",
         )
+
+
+@router.get("/me", response_model=UserRead)
+async def read_current_user(current_user: CurrentUser) -> UserRead:
+    return current_user
