@@ -8,8 +8,10 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.security import decode_access_token
 from app.db.session import get_db
 from app.models.user import User
+from app.repositories.todo_repository import TodoRepository
 from app.repositories.user_repository import UserRepository
 from app.services.auth_service import AuthService
+from app.services.todo_service import TodoService
 
 DbSession = Annotated[AsyncSession, Depends(get_db)]
 
@@ -26,6 +28,20 @@ def get_auth_service(user_repository: UserRepositoryDep) -> AuthService:
 
 
 AuthServiceDep = Annotated[AuthService, Depends(get_auth_service)]
+
+
+def get_todo_repository(session: DbSession) -> TodoRepository:
+    return TodoRepository(session)
+
+
+TodoRepositoryDep = Annotated[TodoRepository, Depends(get_todo_repository)]
+
+
+def get_todo_service(todo_repository: TodoRepositoryDep) -> TodoService:
+    return TodoService(todo_repository)
+
+
+TodoServiceDep = Annotated[TodoService, Depends(get_todo_service)]
 
 # auto_error=False so we can return a consistent 401 for missing/invalid tokens.
 bearer_scheme = HTTPBearer(auto_error=False)
