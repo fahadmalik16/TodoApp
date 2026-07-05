@@ -26,6 +26,7 @@ sqlalchemy (ORM) ,
 alembic for migrations, 
 psycopg (v3) as the psql driver (handles both async app + sync alembic),
 pydantic and pydantic settings for data validation, 
+email-validator for EmailStr validation (required by pydantic's EmailStr), 
 bcrypt for pass hashing, 
 pyjwt for jwt,
 pytest and pytest-asyncio, httpx async for testing. 
