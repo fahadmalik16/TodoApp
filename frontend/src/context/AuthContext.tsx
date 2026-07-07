@@ -1,10 +1,17 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState, ReactNode } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+  ReactNode,
+} from "react";
 import { useRouter } from "next/navigation";
 
 import { api } from "@/lib/api";
-import { tokenStorage } from "@/lib/auth";
+import { getTokenExpiry, tokenStorage } from "@/lib/auth";
 import { User } from "@/lib/types";
 
 interface AuthContextType {
@@ -34,6 +41,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       .finally(() => setLoading(false));
   }, []);
 
+  const logout = useCallback(() => {
+    tokenStorage.clear();
+    setUser(null);
+    router.push("/signin");
+  }, [router]);
+
   async function login(email: string, password: string) {
     const token = await api.signin({ email, password });
     tokenStorage.set(token.access_token);
@@ -41,11 +54,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(me);
   }
 
-  function logout() {
-    tokenStorage.clear();
-    setUser(null);
-    router.push("/signin");
-  }
+  // Proactively sign out the moment the token expires, even while idle.
+  useEffect(() => {
+    if (!user) return;
+    const token = tokenStorage.get();
+    if (!token) return;
+    const expiryMs = getTokenExpiry(token);
+    if (expiryMs === null) return;
+
+    // If already expired, delay is 0 and logout fires on the next tick.
+    const delay = Math.max(0, expiryMs - Date.now());
+    const timer = setTimeout(logout, delay);
+    return () => clearTimeout(timer);
+  }, [user, logout]);
 
   return (
     <AuthContext.Provider value={{ user, loading, login, logout }}>

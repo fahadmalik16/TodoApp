@@ -12,3 +12,19 @@ export const tokenStorage = {
     localStorage.removeItem(TOKEN_KEY);
   },
 };
+
+/**
+ * Read the token's expiry time (in ms since epoch) from its `exp` claim.
+ * Returns null if the token can't be decoded or has no expiry.
+ */
+export function getTokenExpiry(token: string): number | null {
+  try {
+    const payload = token.split(".")[1];
+    const decoded = JSON.parse(
+      atob(payload.replace(/-/g, "+").replace(/_/g, "/")),
+    );
+    return typeof decoded.exp === "number" ? decoded.exp * 1000 : null;
+  } catch {
+    return null;
+  }
+}
