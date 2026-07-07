@@ -69,30 +69,40 @@ export default function TodosPage() {
     setTodos((prev) => prev.map((t) => (t.id === id ? updated : t)));
   }
 
+  const remaining = todos.filter((t) => !t.is_completed).length;
+
   if (loading || !user) {
-    return <p className="text-gray-400">Loading…</p>;
+    return <p className="text-ink/60">Loading…</p>;
   }
 
   return (
     <div>
-      <h1 className="mb-6 text-2xl font-semibold text-white">My Todos</h1>
+      <div className="mb-6 flex items-baseline gap-3">
+        <h1 className="inline-block -rotate-1 rounded-xl border-[3px] border-ink bg-white px-4 py-1.5 text-2xl font-semibold shadow-hard">
+          My Todos
+        </h1>
+        <p className="text-base text-black font-semibold translate-y-2">
+        Act now, worry less <span className="mt-5 text-xl ">☕</span>
+        </p>
+      </div>
 
       <form onSubmit={handleAdd} className="mb-6 space-y-2">
-        <div className="flex gap-2">
+        <div className="flex">
           <input
             type="text"
             placeholder="What needs doing?"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="flex-1 rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 placeholder-gray-400 focus:border-gray-500 focus:outline-none focus:ring-1 focus:ring-gray-400"
+            className="input-pop flex-1 rounded-r-none border-r-0"
           />
           <button
             type="submit"
             aria-label="Add todo"
             title="Add todo"
-            className="flex shrink-0 cursor-pointer items-center justify-center rounded-full bg-gray-800 p-2.5 text-white hover:bg-gray-700"
+            className="btn-pop shrink-0 gap-1 rounded-l-none bg-pink-deep px-5"
           >
-            <PlusIcon />
+            <PlusIcon className="h-4 w-4" />
+            Add!
           </button>
         </div>
         <input
@@ -100,30 +110,42 @@ export default function TodosPage() {
           placeholder="Description (optional)"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 placeholder-gray-400 focus:border-gray-500 focus:outline-none focus:ring-1 focus:ring-gray-400"
+          className="input-pop"
         />
       </form>
 
       {error && (
-        <p className="mb-4 rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>
+        <p className="card-pop mb-4 rounded-xl border-l-8 border-l-berry px-4 py-2 text-sm">
+          {error}
+        </p>
       )}
 
       {loadingTodos ? (
-        <p className="text-gray-400">Loading todos…</p>
+        <p className="text-ink/60">Loading todos…</p>
       ) : todos.length === 0 ? (
-        <p className="text-gray-400">No todos yet. Add one above.</p>
+        <p className="card-pop rounded-2xl px-5 py-6 text-center text-ink/70">
+          Nothing yet — add your first one! ✨
+        </p>
       ) : (
-        <ul className="space-y-2">
-          {todos.map((todo) => (
-            <TodoItem
-              key={todo.id}
-              todo={todo}
-              onToggle={handleToggle}
-              onDelete={handleDelete}
-              onEdit={handleEdit}
-            />
-          ))}
-        </ul>
+        <>
+          <ul className="space-y-4">
+            {todos.map((todo) => (
+              <TodoItem
+                key={todo.id}
+                todo={todo}
+                onToggle={handleToggle}
+                onDelete={handleDelete}
+                onEdit={handleEdit}
+              />
+            ))}
+          </ul>
+          <p className="mt-10  text-center text-sm">
+            <span className="rounded-full border-2 border-ink bg-sun px-4 py-1 font-semibold shadow-hard-sm">
+              {remaining} left
+            </span>{" "}
+            — <span className="text-base font-semibold text-black">you got this!</span>
+          </p>
+        </>
       )}
     </div>
   );

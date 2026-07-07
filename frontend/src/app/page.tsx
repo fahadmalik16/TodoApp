@@ -14,5 +14,5 @@ export default function Home() {
     router.replace(user ? "/todos" : "/signin");
   }, [user, loading, router]);
 
-  return <p className="text-gray-500">Loading…</p>;
+  return <p className="text-ink/60">Loading…</p>;
 }

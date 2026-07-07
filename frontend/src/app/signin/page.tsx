@@ -30,46 +30,52 @@ export default function SignInPage() {
   }
 
   return (
-    <div className="mx-auto max-w-sm">
-      <h1 className="mb-6 text-2xl font-semibold text-white">Sign in</h1>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        {error && (
-          <p className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>
-        )}
-        <div>
-          <label className="mb-1 block text-sm font-medium text-gray-300">Email</label>
-          <input
-            type="email"
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 placeholder-gray-400 focus:border-gray-500 focus:outline-none focus:ring-1 focus:ring-gray-400"
-          />
-        </div>
-        <div>
-          <label className="mb-1 block text-sm font-medium text-gray-300">Password</label>
-          <input
-            type="password"
-            required
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 placeholder-gray-400 focus:border-gray-500 focus:outline-none focus:ring-1 focus:ring-gray-400"
-          />
-        </div>
-        <button
-          type="submit"
-          disabled={submitting}
-          className="w-full cursor-pointer rounded-md bg-gray-800 px-4 py-2 text-white hover:bg-gray-700 disabled:cursor-not-allowed disabled:opacity-50"
-        >
-          {submitting ? "Signing in…" : "Sign in"}
-        </button>
-      </form>
-      <p className="mt-4 text-sm text-gray-300">
-        No account?{" "}
-        <Link href="/signup" className="font-medium text-gray-300 underline">
-          Sign up
-        </Link>
-      </p>
+    <div className="mx-auto mt-6 max-w-sm">
+      <div className="card-pop rounded-2xl p-6">
+        <h1 className="mb-6 inline-block -rotate-1 rounded-xl border-[3px] border-ink bg-sky px-4 py-1.5 text-2xl font-semibold shadow-hard">
+          Welcome back!
+        </h1>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          {error && (
+            <p className="rounded-xl border-[3px] border-ink border-l-8 border-l-berry bg-white px-3 py-2 text-sm shadow-hard-sm">
+              {error}
+            </p>
+          )}
+          <div>
+            <label className="mb-1 block text-sm font-semibold">Email</label>
+            <input
+              type="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="input-pop"
+            />
+          </div>
+          <div>
+            <label className="mb-1 block text-sm font-semibold">Password</label>
+            <input
+              type="password"
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="input-pop"
+            />
+          </div>
+          <button
+            type="submit"
+            disabled={submitting}
+            className="btn-pop w-full bg-pink-deep px-4 py-2"
+          >
+            {submitting ? "Signing in…" : "Sign in"}
+          </button>
+        </form>
+        <p className="mt-4 text-sm text-ink/70">
+          No account?{" "}
+          <Link href="/signup" className="font-semibold text-ink underline">
+            Sign up
+          </Link>
+        </p>
+      </div>
     </div>
   );
 }
