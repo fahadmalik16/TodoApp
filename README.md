@@ -16,7 +16,7 @@ A basic full-stack To-Do application, built from scratch as a learning project.
 - **Database:** PostgreSQL
 - **ORM:** SQLAlchemy
 - **Migrations:** Alembic
-- **Auth:** PyJWT + Passlib (bcrypt)
+- **Auth:** PyJWT + bcrypt
 - **Testing:** pytest, pytest-asyncio, httpx
 - **Dependency management:** uv
 - **Containerization:** Docker Compose
