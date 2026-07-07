@@ -220,5 +220,6 @@ __marimo__/
 # Frontend source: the Python "lib/" rule above would otherwise ignore this
 !frontend/src/lib/
 
-# Local-only development notes (superseded by Docker instructions in README)
+# Local-only notes (personal references, not part of the repo)
 GETSTARTED.md
+ARCHITECTURE.md

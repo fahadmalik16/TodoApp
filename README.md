@@ -1,6 +1,18 @@
 # TodoApp
 
-A full-stack To-Do application built from scratch as a learning project — FastAPI backend, Next.js frontend, JWT authentication, and PostgreSQL.
+A full-stack To-Do application — FastAPI backend, Next.js frontend, JWT authentication, and PostgreSQL, fully containerized with Docker Compose.
+
+## Table of Contents
+
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Architecture](#architecture)
+- [Project Structure](#project-structure)
+- [Prerequisites](#prerequisites)
+- [Getting Started](#getting-started)
+- [Configuration](#configuration)
+- [API Endpoints](#api-endpoints)
+- [Testing](#testing)
 
 ## Features
 
@@ -25,9 +37,19 @@ A full-stack To-Do application built from scratch as a learning project — Fast
 - Tailwind CSS
 
 **Infrastructure**
-- Docker Compose (planned) — database + migrations + server on port 8090
+- Docker Compose — database + migrations + backend (8090) + frontend (3000)
 
 ## Architecture
+
+The system runs as three containers. The browser loads the UI from the frontend,
+then calls the backend API directly; the backend owns all data access.
+
+```mermaid
+flowchart LR
+    B([Browser]) -->|loads UI :3000| F["Frontend<br/>Next.js"]
+    B -->|API calls :8090| A["Backend<br/>FastAPI"]
+    A -->|SQL| D[("PostgreSQL")]
+```
 
 The backend follows a layered architecture (SOLID):
 
@@ -40,7 +62,6 @@ Plumbing      → db/             (engine, session)
 ```
 
 Rule: each layer only calls the one below it (`route → service → repository → model/DB`).
-See [ARCHITECTURE.md](ARCHITECTURE.md) for a detailed walkthrough of the sign-up flow.
 
 ## Project Structure
 
@@ -56,27 +77,66 @@ TodoApp/
 │   │   ├── schemas/    Pydantic schemas
 │   │   └── services/   business logic
 │   ├── alembic/        migrations
-│   └── tests/          pytest suite
+│   ├── tests/          pytest suite
+│   └── Dockerfile
 ├── frontend/           Next.js application
-│   └── src/
-│       ├── app/        pages (signin, signup, todos)
-│       ├── components/ Nav, TodoItem, icons
-│       ├── context/    AuthContext
-│       └── lib/        API client, auth helpers, types
-├── ARCHITECTURE.md
+│   ├── src/
+│   │   ├── app/        pages (signin, signup, todos)
+│   │   ├── components/ Nav, TodoItem, icons
+│   │   ├── context/    AuthContext
+│   │   └── lib/        API client, auth helpers, types
+│   └── Dockerfile
+├── docker-compose.yml
 └── Info.md             requirements & decisions log
 ```
 
+## Prerequisites
+
+- [Git](https://git-scm.com/)
+- [Docker](https://www.docker.com/) (with Docker Compose v2)
+
+That's all — Python, Node, and PostgreSQL run inside the containers.
+
 ## Getting Started
 
-The app is being containerized. Once complete, the whole stack will run with:
-
 ```bash
-docker compose up
+git clone <repo-url>
+cd TodoApp
+docker compose up --build
 ```
 
-This will start PostgreSQL, run the database migrations, and serve the API on
-`http://localhost:8090`.
+This starts PostgreSQL, runs the database migrations, and serves both apps:
+
+| Service | URL |
+|---|---|
+| Frontend (UI) | http://localhost:3000 |
+| Backend API | http://localhost:8090 |
+| API docs (Swagger) | http://localhost:8090/docs |
+
+Open http://localhost:3000, sign up, and start adding todos.
+
+To stop the stack: `docker compose down` (add `-v` to also wipe the database).
+
+## Configuration
+
+Configuration is provided via environment variables. Docker Compose sets sensible
+defaults, so no setup is required to run locally; override any of them in the
+environment for a real deployment.
+
+| Variable | Description | Default |
+|---|---|---|
+| `POSTGRES_USER` | Database user | `todo_user` |
+| `POSTGRES_PASSWORD` | Database password | **Set your own** |
+| `POSTGRES_DB` | Database name | `todo_db` |
+| `JWT_SECRET_KEY` | Secret used to sign JWTs | **Required — set your own; no safe default** |
+| `JWT_ALGORITHM` | JWT signing algorithm | `HS256` |
+| `ACCESS_TOKEN_EXPIRE_MINUTES` | Access-token lifetime | `30` |
+| `CORS_ORIGINS` | Allowed frontend origins (comma-separated) | `http://localhost:3000` |
+
+> For local convenience, `docker-compose.yml` includes dev-only defaults for the
+> secrets above. **Always override `JWT_SECRET_KEY` (and the DB password) for any
+> real deployment** — generate a strong secret, e.g.
+> `python -c "import secrets; print(secrets.token_hex(32))"`.
 
 ## API Endpoints
 
@@ -93,13 +153,13 @@ This will start PostgreSQL, run the database migrations, and serve the API on
 
 Interactive docs are available at `/docs` (Swagger UI) when the server is running.
 
-## Project Status
+## Testing
 
-| Area | Status |
-|---|---|
-| Backend (auth + todos) | ✅ Done |
-| Database migrations (Alembic) | ✅ Done |
-| Frontend (Next.js UI) | ✅ Done |
-| Session expiry handling | ✅ Done |
-| Integration tests | ✅ Done |
-| Docker Compose | 🚧 In progress |
+The backend has an integration test suite covering authentication and the full
+todo CRUD. Run it from the `backend/` directory:
+
+```bash
+cd backend
+uv sync
+uv run pytest
+```
