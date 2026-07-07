@@ -22,6 +22,17 @@ async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
 
   const res = await fetch(`${API_URL}${path}`, { ...options, headers });
 
+  // If we sent a token but it was rejected, it has expired/is invalid:
+  // clear it and send the user back to sign in. (A 401 without a token —
+  // e.g. a wrong password on sign-in — is left for the caller to handle.)
+  if (res.status === 401 && token) {
+    tokenStorage.clear();
+    if (typeof window !== "undefined") {
+      window.location.href = "/signin";
+    }
+    throw new ApiError(401, "Session expired. Please sign in again.");
+  }
+
   if (!res.ok) {
     let detail: string = res.statusText;
     try {
