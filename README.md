@@ -51,7 +51,7 @@ flowchart LR
     A -->|SQL| D[("PostgreSQL")]
 ```
 
-The backend follows a layered architecture (SOLID):
+The backend follows a layered architecture (SOLID). Each layer only calls the one below it (`route → service → repository → model/DB`).
 
 ```
 Presentation  → api/ (routes)   + schemas/ (Pydantic request/response)
@@ -61,7 +61,6 @@ Cross-cutting → core/           (config, security/JWT, exceptions)
 Plumbing      → db/             (engine, session)
 ```
 
-Rule: each layer only calls the one below it (`route → service → repository → model/DB`).
 
 ## Project Structure
 
