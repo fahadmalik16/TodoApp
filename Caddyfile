@@ -1,0 +1,12 @@
+{$DOMAIN} {
+	# Browser calls https://{$DOMAIN}/api/* — strip the /api prefix
+	# so the backend sees the same paths as in dev (e.g. /todos).
+	handle_path /api/* {
+		reverse_proxy backend:8090
+	}
+
+	# Everything else goes to the Next.js frontend.
+	handle {
+		reverse_proxy frontend:3000
+	}
+}
