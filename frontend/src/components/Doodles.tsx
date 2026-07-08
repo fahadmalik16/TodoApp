@@ -53,8 +53,8 @@ export default function Doodles() {
               x="9"
               y="0.5"
               width="6"
-              height="6"
-              rx="1.5"
+              height="8"
+              rx="0.5"
               transform={`rotate(${deg} 12 12)`}
             />
           ))}

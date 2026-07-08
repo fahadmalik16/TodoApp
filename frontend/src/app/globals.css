@@ -17,6 +17,41 @@
   --color-sun: #ffd23f;
   --color-done: #f2ede4;
   --color-berry: #e0656f;
+  
+  /* Citrus */
+  --color-lemon: #fff44f;
+  --color-lemon-soft: #fffbd0;
+  --color-tangerine: #ffab40;
+  --color-tangerine-soft: #ffe0b2;
+  --color-lime: #b8f07a;
+  --color-lime-soft: #e8fcd4;
+
+  /* Tropical */
+  --color-mango: #ffcc02;
+  --color-mango-soft: #fff0a0;
+  --color-papaya: #ffb347;
+  --color-papaya-soft: #fde8c8;
+  --color-kiwi: #8ee000;
+  --color-kiwi-soft: #ddf5a0;
+  --color-coconut: #f5f0e8;
+
+  /* Berry */
+  --color-blueberry: #6b78d4;
+  --color-blueberry-soft: #dde0f8;
+  --color-grape: #c084d4;
+  --color-grape-soft: #eed8f8;
+  --color-strawberry: #ff6b7a;
+  --color-strawberry-soft: #ffd8dc;
+  --color-watermelon: #fc5c7d;
+  --color-watermelon-soft: #ffd6e0;
+
+  /* Stone Fruit */
+  --color-peach: #ffcba4;
+  --color-peach-soft: #ffeedd;
+  --color-plum: #a0527a;
+  --color-plum-soft: #ecd4e4;
+  --color-apricot: #ffb07c;
+  --color-apricot-soft: #ffe8d8;
 
 
   --font-sans: var(--font-fredoka), "Arial Rounded MT Bold", ui-rounded,
