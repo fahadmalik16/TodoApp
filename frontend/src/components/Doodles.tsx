@@ -41,13 +41,13 @@ export default function Doodles() {
 
       {/* Gear */}
       <svg
-        viewBox="0 0 24 24"
-        className="animate-spin-slow absolute top-24 left-[5%] h-9 w-9 fill-tangerine stroke-ink [animation-duration:14s]"
+        viewBox="-1.5 -1.5 27 27"
+        className="animate-spin-slow absolute top-24 left-[5%] h-10 w-10 fill-tangerine stroke-ink [animation-duration:14s]"
         strokeWidth={2.4}
         strokeLinejoin="round"
       >
         <g>
-          {[0, 45, 90, 135, 180, 225, 270, 315].map((deg) => (
+          {[0, 60, 120, 180, 240, 300].map((deg) => (
             <rect
               key={deg}
               x="9"

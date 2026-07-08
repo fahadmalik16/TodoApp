@@ -11,7 +11,7 @@ export default function Home() {
 
   useEffect(() => {
     if (loading) return;
-    router.replace(user ? "/todos" : "/signin");
+    router.replace(user ? "/todos" : "/signup");
   }, [user, loading, router]);
 
   return <p className="text-ink/60 dark:text-cream/70">Loading…</p>;

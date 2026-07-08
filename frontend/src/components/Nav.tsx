@@ -38,14 +38,20 @@ export default function Nav() {
               <span className="rounded-full border-2 border-ink bg-butter px-3 py-1 font-medium">
                 Hi, {user.username}
               </span>
-              <button onClick={logout} className="btn-pop rounded-full px-3 py-1">
+              <button
+                onClick={logout}
+                className="btn-pop rounded-full bg-grape-soft px-3 py-1"
+              >
                 Sign out
               </button>
             </>
           ) : (
             <>
               {pathname !== "/signin" && (
-                <Link href="/signin" className="btn-pop rounded-full px-3 py-1">
+                <Link
+                  href="/signin"
+                  className="btn-pop rounded-full bg-grape-soft px-3 py-1"
+                >
                   Sign in
                 </Link>
               )}
