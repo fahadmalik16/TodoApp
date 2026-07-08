@@ -25,13 +25,15 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${fredoka.variable} h-full antialiased`}
+      data-theme="dark"
       suppressHydrationWarning
     >
       <body className="flex min-h-full flex-col font-sans">
-        {/* Apply the saved theme before paint to avoid a light→dark flash. */}
+        {/* Dark is the default; honor an explicitly saved 'light' choice,
+            applied before paint to avoid a flash. */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `try{var t=localStorage.getItem('theme');if(t==='dark')document.documentElement.dataset.theme='dark';}catch(e){}`,
+            __html: `try{if(localStorage.getItem('theme')==='light')document.documentElement.dataset.theme='light';}catch(e){}`,
           }}
         />
         <AuthProvider>
