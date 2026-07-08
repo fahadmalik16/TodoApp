@@ -53,13 +53,13 @@ export default function Doodles() {
               x="9"
               y="0.5"
               width="6"
-              height="8"
+              height="13.5"
               rx="0.5"
               transform={`rotate(${deg} 12 12)`}
             />
           ))}
-          <circle cx="12" cy="12" r="7.2" />
-          <circle cx="12" cy="12" r="2.6" className="fill-paper" />
+          <circle cx="12" cy="12" r="6.2" />
+          <circle cx="12" cy="12" r="2" className="fill-paper" />
         </g>
       </svg>
     </div>
