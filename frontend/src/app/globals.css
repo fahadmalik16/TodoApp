@@ -1,9 +1,13 @@
 @import "tailwindcss";
 
+/* Attribute-based dark mode: <html data-theme="dark"> */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
 @theme {
   /* Sticker Pop palette */
   --color-paper: #fdf6ec;
   --color-ink: #21201e;
+  --color-cream: #f5efe4; /* loose text on the dark ground */
   --color-pink: #ffd6e8;
   --color-pink-deep: #ffb8d9;
   --color-butter: #fff3b0;
@@ -14,40 +18,6 @@
   --color-done: #f2ede4;
   --color-berry: #e0656f;
 
-  /* Citrus */
-  --color-lemon: #fff44f;
-  --color-lemon-soft: #fffbd0;
-  --color-tangerine: #ffab40;
-  --color-tangerine-soft: #ffe0b2;
-  --color-lime: #b8f07a;
-  --color-lime-soft: #e8fcd4;
-
-  /* Tropical */
-  --color-mango: #ffcc02;
-  --color-mango-soft: #fff0a0;
-  --color-papaya: #ffb347;
-  --color-papaya-soft: #fde8c8;
-  --color-kiwi: #8ee000;
-  --color-kiwi-soft: #ddf5a0;
-  --color-coconut: #f5f0e8;
-
-  /* Berry */
-  --color-blueberry: #6b78d4;
-  --color-blueberry-soft: #dde0f8;
-  --color-grape: #c084d4;
-  --color-grape-soft: #eed8f8;
-  --color-strawberry: #ff6b7a;
-  --color-strawberry-soft: #ffd8dc;
-  --color-watermelon: #fc5c7d;
-  --color-watermelon-soft: #ffd6e0;
-
-  /* Stone Fruit */
-  --color-peach: #ffcba4;
-  --color-peach-soft: #ffeedd;
-  --color-plum: #a0527a;
-  --color-plum-soft: #ecd4e4;
-  --color-apricot: #ffb07c;
-  --color-apricot-soft: #ffe8d8;
 
   --font-sans: var(--font-fredoka), "Arial Rounded MT Bold", ui-rounded,
     "Hiragino Maru Gothic ProN", "Segoe UI", sans-serif;
@@ -102,6 +72,16 @@ body {
   background-image: radial-gradient(var(--color-black) 1px, transparent 0.5px);
   background-size: 26px 26px;
   color: var(--color-ink);
+}
+
+/* Dark mode: only the ground changes. Cards, nav, borders, buttons and
+   shadows keep their light-mode look; the pastels pop against the dark. */
+[data-theme="dark"] {
+  --color-paper: #1e1a26; /* midnight plum ground */
+}
+[data-theme="dark"] body {
+  background-image: radial-gradient(#39324a 1.4px, transparent 1.4px);
+  background-size: 22px 22px;
 }
 
 :focus-visible {

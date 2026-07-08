@@ -6,7 +6,7 @@ export default function Doodles() {
       className="pointer-events-none fixed inset-0 z-0 overflow-hidden"
     >
       {/* Pendulum */}
-      <div className="animate-swing absolute -top-2 right-[12%] h-28 w-1 origin-top bg-ink">
+      <div className="animate-swing absolute -top-2 right-[12%] h-35 w-1 origin-top bg-gray-500 [animation-duration:3s]">
         <span className="absolute -bottom-6 left-1/2 h-7 w-7 -translate-x-1/2 rounded-full border-[3px] border-ink bg-sun" />
       </div>
 
@@ -42,23 +42,24 @@ export default function Doodles() {
       {/* Gear */}
       <svg
         viewBox="0 0 24 24"
-        className="animate-spin-slow absolute top-24 left-[5%] h-8 w-8 fill-tangerine stroke-ink [animation-duration:14s]"
-        strokeWidth={2}
+        className="animate-spin-slow absolute top-24 left-[5%] h-9 w-9 fill-tangerine stroke-ink [animation-duration:14s]"
+        strokeWidth={2.4}
+        strokeLinejoin="round"
       >
         <g>
-          {[0, 45, 90, 135].map((deg) => (
+          {[0, 45, 90, 135, 180, 225, 270, 315].map((deg) => (
             <rect
               key={deg}
-              x="10.5"
-              y="0.75"
-              width="3"
-              height="22.5"
+              x="9"
+              y="0.5"
+              width="6"
+              height="6"
               rx="1.5"
               transform={`rotate(${deg} 12 12)`}
             />
           ))}
-          <circle cx="12" cy="12" r="6.5" />
-          <circle cx="12" cy="12" r="2.5" className="fill-paper" />
+          <circle cx="12" cy="12" r="7.2" />
+          <circle cx="12" cy="12" r="2.6" className="fill-paper" />
         </g>
       </svg>
     </div>

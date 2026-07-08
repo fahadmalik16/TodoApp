@@ -72,7 +72,7 @@ export default function TodosPage() {
   const remaining = todos.filter((t) => !t.is_completed).length;
 
   if (loading || !user) {
-    return <p className="text-ink/60">Loading…</p>;
+    return <p className="text-ink/60 dark:text-cream/70">Loading…</p>;
   }
 
   return (
@@ -81,7 +81,7 @@ export default function TodosPage() {
         <h1 className="inline-block -rotate-1 rounded-xl border-[3px] border-ink bg-white px-4 py-1.5 text-2xl font-semibold shadow-hard">
           My Todos
         </h1>
-        <p className="text-base text-black font-semibold translate-y-2">
+        <p className="text-base text-black dark:text-cream font-semibold translate-y-2">
         Act now, worry less <span className="mt-5 text-xl ">☕</span>
         </p>
       </div>
@@ -121,7 +121,7 @@ export default function TodosPage() {
       )}
 
       {loadingTodos ? (
-        <p className="text-ink/60">Loading todos…</p>
+        <p className="text-ink/60 dark:text-cream/70">Loading todos…</p>
       ) : todos.length === 0 ? (
         <p className="card-pop rounded-2xl px-5 py-6 text-center text-ink/70">
           Nothing yet — add your first one! ✨
@@ -139,11 +139,14 @@ export default function TodosPage() {
               />
             ))}
           </ul>
-          <p className="mt-10  text-center text-sm">
-            <span className="rounded-full border-2 border-ink bg-sun px-4 py-1 font-semibold shadow-hard-sm">
+          <p className="mt-10  text-center text-sm dark:text-cream">
+            <span className="rounded-full border-2 border-ink bg-sun px-4 py-1 font-semibold text-ink shadow-hard-sm">
               {remaining} left
             </span>{" "}
-            — <span className="text-base font-semibold text-black">you got this!</span>
+            —{" "}
+            <span className="text-base font-semibold text-black dark:text-cream">
+              you got this!
+            </span>
           </p>
         </>
       )}

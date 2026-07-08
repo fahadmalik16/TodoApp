@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import { useAuth } from "@/context/AuthContext";
+import ThemeToggle from "@/components/ThemeToggle";
 
 const letterTiles = [
   { letter: "T", bg: "bg-pink", tilt: "-rotate-6", delay: "0s" },
@@ -30,29 +31,35 @@ export default function Nav() {
             </span>
           ))}
         </Link>
-        {user ? (
-          <div className="flex items-center gap-3 text-sm">
-            <span className="rounded-full border-2 border-ink bg-butter px-3 py-1 font-medium">
-              Hi, {user.username}
-            </span>
-            <button onClick={logout} className="btn-pop rounded-full px-3 py-1">
-              Sign out
-            </button>
-          </div>
-        ) : (
-          <div className="flex items-center gap-3 text-sm">
-            {pathname !== "/signin" && (
-              <Link href="/signin" className="btn-pop rounded-full px-3 py-1">
-                Sign in
-              </Link>
-            )}
-            {pathname !== "/signup" && (
-              <Link href="/signup" className="btn-pop rounded-full bg-grape-soft px-3 py-1">
-                Sign up
-              </Link>
-            )}
-          </div>
-        )}
+        <div className="flex items-center gap-3 text-sm">
+          <ThemeToggle />
+          {user ? (
+            <>
+              <span className="rounded-full border-2 border-ink bg-butter px-3 py-1 font-medium">
+                Hi, {user.username}
+              </span>
+              <button onClick={logout} className="btn-pop rounded-full px-3 py-1">
+                Sign out
+              </button>
+            </>
+          ) : (
+            <>
+              {pathname !== "/signin" && (
+                <Link href="/signin" className="btn-pop rounded-full px-3 py-1">
+                  Sign in
+                </Link>
+              )}
+              {pathname !== "/signup" && (
+                <Link
+                  href="/signup"
+                  className="btn-pop rounded-full bg-grape-soft px-3 py-1"
+                >
+                  Sign up
+                </Link>
+              )}
+            </>
+          )}
+        </div>
       </div>
     </nav>
   );

@@ -22,8 +22,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${fredoka.variable} h-full antialiased`}>
+    <html
+      lang="en"
+      className={`${fredoka.variable} h-full antialiased`}
+      suppressHydrationWarning
+    >
       <body className="flex min-h-full flex-col font-sans">
+        {/* Apply the saved theme before paint to avoid a light→dark flash. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{var t=localStorage.getItem('theme');if(t==='dark')document.documentElement.dataset.theme='dark';}catch(e){}`,
+          }}
+        />
         <AuthProvider>
           <Doodles />
           <Nav />
