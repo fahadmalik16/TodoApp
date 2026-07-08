@@ -64,7 +64,7 @@ export default function SignInPage() {
           <button
             type="submit"
             disabled={submitting}
-            className="btn-pop w-full bg-pink-deep px-4 py-2"
+            className="btn-pop w-full bg-grape-soft px-4 py-2"
           >
             {submitting ? "Signing in…" : "Sign in"}
           </button>

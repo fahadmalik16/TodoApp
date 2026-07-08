@@ -47,7 +47,7 @@ export default function Nav() {
               </Link>
             )}
             {pathname !== "/signup" && (
-              <Link href="/signup" className="btn-pop rounded-full bg-pink-deep px-3 py-1">
+              <Link href="/signup" className="btn-pop rounded-full bg-grape-soft px-3 py-1">
                 Sign up
               </Link>
             )}

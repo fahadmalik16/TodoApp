@@ -99,7 +99,7 @@ export default function TodosPage() {
             type="submit"
             aria-label="Add todo"
             title="Add todo"
-            className="btn-pop shrink-0 gap-1 rounded-l-none bg-pink-deep px-5"
+            className="btn-pop shrink-0 gap-1 rounded-l-none bg-grape-soft px-5"
           >
             <PlusIcon className="h-4 w-4" />
             Add!

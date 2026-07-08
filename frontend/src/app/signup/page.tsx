@@ -82,7 +82,7 @@ export default function SignUpPage() {
           <button
             type="submit"
             disabled={submitting}
-            className="btn-pop w-full bg-pink-deep px-4 py-2"
+            className="btn-pop w-full bg-grape-soft px-4 py-2"
           >
             {submitting ? "Creating account…" : "Sign up"}
           </button>
