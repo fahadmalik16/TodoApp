@@ -3,9 +3,8 @@ FROM ghcr.io/astral-sh/uv:python3.12-bookworm-slim
 
 WORKDIR /app
 
-# Install dependencies first so this layer is cached unless deps change.
 COPY pyproject.toml uv.lock ./
-RUN uv sync --frozen --no-dev
+RUN uv sync --frozen --no-dev --no-cache
 
 # Copy the application code (and alembic config/migrations).
 COPY . .
