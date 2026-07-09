@@ -1,8 +1,6 @@
 # Production deployment: Caddy terminates HTTPS (auto Let's Encrypt) and is the
 # ONLY publicly exposed service. Frontend/backend are reachable solely through it.
 #
-# On the server, create a .env next to this file (see .env.example), then:
-#   docker compose -f docker-compose.prod.yml up -d --build
 services:
   db:
     image: postgres:18-alpine
@@ -22,8 +20,7 @@ services:
       retries: 10
 
   backend:
-    build:
-      context: ./backend
+    image: ghcr.io/fahadmalik16/todoapp-backend:latest
     restart: unless-stopped
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-todo_user}
@@ -40,12 +37,9 @@ services:
         condition: service_healthy
 
   frontend:
-    build:
-      context: ./frontend
-      args:
-        # Baked into the client bundle at build time; /api is routed
-        # (and prefix-stripped) to the backend by Caddy.
-        NEXT_PUBLIC_API_URL: https://${DOMAIN:?set DOMAIN in .env}/api
+    # NEXT_PUBLIC_API_URL (https://<DOMAIN>/api) is baked in at CI build time
+    # via the DOMAIN repository variable — see the workflow file.
+    image: ghcr.io/fahadmalik16/todoapp-frontend:latest
     restart: unless-stopped
     depends_on:
       - backend
