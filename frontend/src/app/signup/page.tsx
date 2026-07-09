@@ -36,7 +36,7 @@ export default function SignUpPage() {
     <div className="mx-auto mt-6 max-w-sm">
       <div className="card-pop rounded-2xl p-6">
         <h1 className="mb-6 inline-block rotate-1 rounded-xl border-[3px] border-ink bg-mint px-4 py-1.5 text-2xl font-semibold shadow-hard">
-          Join the club!
+          Get Started!
         </h1>
         <form onSubmit={handleSubmit} className="space-y-4">
           {error && (
