@@ -216,3 +216,17 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Frontend source: the Python "lib/" rule above would otherwise ignore this
+!frontend/src/lib/
+
+# Local-only notes (personal references, not part of the repo)
+GETSTARTED.md
+ARCHITECTURE.md
+Info.md
+todo-ai-chat-history
+
+
+#Images
+design.png
+design.svg

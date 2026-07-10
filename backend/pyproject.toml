@@ -1,0 +1,26 @@
+[project]
+name = "todoapp"
+version = "0.1.0"
+description = "This is a Todo App"
+requires-python = ">=3.12"
+dependencies = [
+    "alembic>=1.18.5",
+    "bcrypt>=5.0.0",
+    "email-validator>=2.3.0",
+    "fastapi>=0.139.0",
+    "psycopg[binary]>=3.3.4",
+    "pydantic-settings>=2.14.2",
+    "pyjwt>=2.13.0",
+    "sqlalchemy[asyncio]>=2.0.51",
+    "uvicorn>=0.49.0",
+]
+
+[dependency-groups]
+dev = [
+    "httpx>=0.28.1",
+    "pytest>=9.1.1",
+    "pytest-asyncio>=1.4.0",
+]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"

@@ -1,0 +1,187 @@
+@import "tailwindcss";
+
+/* Attribute-based dark mode: <html data-theme="dark"> */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+@theme {
+  /* Sticker Pop palette */
+  --color-paper: #fdf6ec;
+  --color-ink: #21201e;
+  --color-cream: #f5efe4; /* loose text on the dark ground */
+  --color-pink: #ffd6e8;
+  --color-pink-deep: #ffb8d9;
+  --color-butter: #fff3b0;
+  --color-mint: #c9f2d9;
+  --color-mint-soft: #e4f8ec;
+  --color-sky: #cfe4ff;
+  --color-sun: #ffd23f;
+  --color-done: #f2ede4;
+  --color-berry: #e0656f;
+  
+  /* Citrus */
+  --color-lemon: #fff44f;
+  --color-lemon-soft: #fffbd0;
+  --color-tangerine: #ffab40;
+  --color-tangerine-soft: #ffe0b2;
+  --color-lime: #b8f07a;
+  --color-lime-soft: #e8fcd4;
+
+  /* Tropical */
+  --color-mango: #ffcc02;
+  --color-mango-soft: #fff0a0;
+  --color-papaya: #ffb347;
+  --color-papaya-soft: #fde8c8;
+  --color-kiwi: #8ee000;
+  --color-kiwi-soft: #ddf5a0;
+  --color-coconut: #f5f0e8;
+
+  /* Berry */
+  --color-blueberry: #6b78d4;
+  --color-blueberry-soft: #dde0f8;
+  --color-grape: #c084d4;
+  --color-grape-soft: #eed8f8;
+  --color-strawberry: #ff6b7a;
+  --color-strawberry-soft: #ffd8dc;
+  --color-watermelon: #fc5c7d;
+  --color-watermelon-soft: #ffd6e0;
+
+  /* Stone Fruit */
+  --color-peach: #ffcba4;
+  --color-peach-soft: #ffeedd;
+  --color-plum: #a0527a;
+  --color-plum-soft: #ecd4e4;
+  --color-apricot: #ffb07c;
+  --color-apricot-soft: #ffe8d8;
+
+
+  --font-sans: var(--font-fredoka), "Arial Rounded MT Bold", ui-rounded,
+    "Hiragino Maru Gothic ProN", "Segoe UI", sans-serif;
+
+  /* Hard offset shadows */
+  --shadow-hard-sm: 3px 3px 0 #21201e;
+  --shadow-hard: 4px 4px 0 #21201e;
+  --shadow-hard-lg: 5px 5px 0 #21201e;
+  --shadow-hard-xl: 7px 7px 0 #21201e;
+
+  --animate-bob: bob 3.4s ease-in-out infinite;
+  --animate-swing: swing 2.6s ease-in-out infinite alternate;
+  --animate-spin-slow: spin-slow 10s linear infinite;
+  --animate-pop-in: pop-in 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+
+  @keyframes bob {
+    0%,
+    100% {
+      translate: 0 0;
+    }
+    50% {
+      translate: 0 -6px;
+    }
+  }
+  @keyframes swing {
+    from {
+      rotate: 15deg;
+    }
+    to {
+      rotate: -15deg;
+    }
+  }
+  @keyframes spin-slow {
+    to {
+      rotate: 360deg;
+    }
+  }
+  @keyframes pop-in {
+    from {
+      opacity: 0;
+      scale: 0.8;
+    }
+    to {
+      opacity: 1;
+      scale: 1;
+    }
+  }
+}
+
+body {
+  background-color: var(--color-paper);
+  background-image: radial-gradient(var(--color-black) 1px, transparent 0.5px);
+  background-size: 26px 26px;
+  color: var(--color-ink);
+}
+
+/* Dark mode: only the ground changes. Cards, nav, borders, buttons and
+   shadows keep their light-mode look; the pastels pop against the dark. */
+[data-theme="dark"] {
+  --color-paper: #1e1a26; /* midnight plum ground */
+}
+[data-theme="dark"] body {
+  background-image: radial-gradient(#39324a 1.4px, transparent 1.4px);
+  background-size: 22px 22px;
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-ink);
+  outline-offset: 2px;
+}
+
+@layer components {
+  .input-pop {
+    width: 100%;
+    border: 3px solid var(--color-ink);
+    border-radius: var(--radius-xl);
+    background: #fff;
+    padding: calc(var(--spacing) * 2.5) calc(var(--spacing) * 4);
+    color: var(--color-ink);
+  }
+  .input-pop::placeholder {
+    color: #a9a49b;
+  }
+  .input-pop:focus-visible {
+    outline-offset: 0;
+  }
+
+  .btn-pop {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid var(--color-ink);
+    border-radius: var(--radius-xl);
+    background: #fff;
+    color: var(--color-ink);
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: var(--shadow-hard);
+    transition:
+      translate 0.12s,
+      box-shadow 0.12s;
+  }
+  .btn-pop:hover {
+    translate: 2px 2px;
+    box-shadow: 2px 2px 0 var(--color-ink);
+  }
+  .btn-pop:active {
+    translate: 4px 4px;
+    box-shadow: 0 0 0 var(--color-ink);
+  }
+  .btn-pop:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+    translate: 0 0;
+    box-shadow: var(--shadow-hard);
+  }
+
+  .card-pop {
+    background: #fff;
+    border: 3px solid var(--color-ink);
+    box-shadow: var(--shadow-hard-lg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
