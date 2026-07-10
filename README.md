@@ -11,6 +11,7 @@ A full-stack To-Do application — FastAPI backend, Next.js frontend, JWT authen
 - [Prerequisites](#prerequisites)
 - [Getting Started](#getting-started)
 - [Configuration](#configuration)
+- [Production Deployment](#production-deployment)
 - [API Endpoints](#api-endpoints)
 - [Testing](#testing)
 
@@ -38,6 +39,9 @@ A full-stack To-Do application — FastAPI backend, Next.js frontend, JWT authen
 
 **Infrastructure**
 - Docker Compose — database + migrations + backend (8090) + frontend (3000)
+- Multi-stage Docker images (Next.js standalone output; slim final images)
+- GitHub Actions CI — builds and pushes images to GitHub Container Registry (ghcr.io)
+- Production: Caddy reverse proxy with automatic HTTPS (Let's Encrypt)
 
 ## Architecture
 
@@ -85,7 +89,10 @@ TodoApp/
 │   │   ├── context/    AuthContext
 │   │   └── lib/        API client, auth helpers, types
 │   └── Dockerfile
-├── docker-compose.yml
+├── .github/workflows/  CI: build & push images to ghcr.io
+├── docker-compose.yml       local development (builds locally)
+├── docker-compose.prod.yml  production (pulls CI-built images)
+├── Caddyfile           production reverse proxy / HTTPS config
 └── Info.md             requirements & decisions log
 ```
 
@@ -136,6 +143,48 @@ environment for a real deployment.
 > secrets above. **Always override `JWT_SECRET_KEY` (and the DB password) for any
 > real deployment** — generate a strong secret, e.g.
 > `python -c "import secrets; print(secrets.token_hex(32))"`.
+
+## Production Deployment
+
+Production runs on a single VM (e.g. EC2) with `docker-compose.prod.yml`. Unlike
+local dev, nothing is built on the server: GitHub Actions
+([`.github/workflows/build-images.yml`](.github/workflows/build-images.yml))
+builds both images on every push to `main` and publishes them to ghcr.io; the
+server only pulls. [Caddy](https://caddyserver.com/) is the sole publicly
+exposed container — it terminates HTTPS (automatic Let's Encrypt certificates)
+and routes by path, so frontend and API share one domain and one certificate.
+
+```mermaid
+flowchart LR
+    B([Browser]) -->|"https://&lt;domain&gt; :443"| C["Caddy<br/>TLS + reverse proxy"]
+    C -->|"/*"| F["Frontend<br/>Next.js"]
+    C -->|"/api/*"| A["Backend<br/>FastAPI"]
+    A -->|SQL| D[("PostgreSQL")]
+```
+
+**One-time setup**
+
+1. Point a DNS record at the server's static IP; open ports 80 + 443.
+2. In the GitHub repo, set the `DOMAIN` Actions variable (Settings → Secrets
+   and variables → Actions → Variables) — CI bakes
+   `https://<DOMAIN>/api` into the frontend bundle as `NEXT_PUBLIC_API_URL`.
+3. On the server, clone the repo and create a `.env` next to
+   `docker-compose.prod.yml` with `DOMAIN`, `JWT_SECRET_KEY`, and
+   `POSTGRES_PASSWORD` (compose refuses to start if any is missing).
+
+**Deploy / update**
+
+```bash
+git pull                                          # compose/Caddyfile changes, if any
+docker compose -f docker-compose.prod.yml pull    # fetch CI-built images
+docker compose -f docker-compose.prod.yml up -d   # swap containers
+docker image prune -af                            # reclaim old image layers
+```
+
+Database data and TLS certificates persist in named volumes (`pgdata`,
+`caddy_data`) across deploys and reboots; all services restart automatically
+(`restart: unless-stopped`). To roll back, pin a service's `image:` to a
+previous commit-SHA tag from ghcr.io and re-run `up -d`.
 
 ## API Endpoints
 
